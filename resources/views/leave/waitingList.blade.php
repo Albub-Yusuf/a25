@@ -14,7 +14,7 @@
 </script>
 @endif
 <div class="row" style="min-height: 75vh;">
-<div class="col-lg-10 grid-margin">
+<div class="col-lg-12 grid-margin">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Leave History</h4>
@@ -23,18 +23,21 @@
                       <thead>
                         <tr>
                           <th>Serial</th>
+                          <th>Employee</th>
                           <th>Leave Type</th>
                           <th>Reason</th>
                           <th>Start Date</th>
                           <th>End Date</th>
                           <th>Total</th>
                           <th>Status</th>
+                          <th>Edit</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach($leaves as $leave)
                         <tr>
                           <td>{{$serial++}}</td>
+                          <td>{{$leave->user->name}}</td>
                           <td>{{$leave->category->category}}</td>
                           <td>{{$leave->reason}}</td>
                           <td>{{$leave->start_date}}</td>
@@ -45,6 +48,7 @@
                                 @if($leave->status=="approved") class="text-success" @endif
                                 @if($leave->status=="rejected") class="text-danger" @endif><b>{{$leave->status}}</b></td>
                           <!-- <td><label class="badge badge-danger">Pending</label></td> -->
+                          <td><a href="{{route('update.leave.request',$leave->id)}}">Show</a></td>
                         </tr>
                         @endforeach
                       </tbody>

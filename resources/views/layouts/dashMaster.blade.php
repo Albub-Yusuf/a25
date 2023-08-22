@@ -115,7 +115,7 @@
                 <li class="nav-item"> <a class="nav-link" href="{{route('make.leave.request')}}">Leave Request</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{route('employee.leave.history')}}">Leave History</a></li>
                 @if(Auth::user()->role=="manager")
-                <li class="nav-item"> <a class="nav-link" href="{{route('admin.request.list')}}">Leave Approval</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('admin.waiting.list')}}">Waiting List</a></li>
                 @endif
               </ul>
             </div>

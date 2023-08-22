@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
             $table->string('reason');
-            $table->unsignedBigInteger('leave_type');
-            $table->unsignedBigInteger('requested_by');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('start_date');
             $table->string('end_date');
             $table->integer('expected_leave_days');
             $table->enum('status',['pending','approved','rejected'])->default('pending');
             $table->tinyInteger('is_notified')->default(1);
-            $table->foreign('leave_type')->references('id')->on('categories')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreign('requested_by')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
