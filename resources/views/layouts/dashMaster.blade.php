@@ -93,13 +93,13 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{route('dashboard')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{route('profile.edit')}}">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Profile</span>
             </a>
@@ -112,10 +112,10 @@
             </a>
             <div class="collapse" id="leave">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">Leave Request</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Leave History</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('make.leave.request')}}">Leave Request</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('employee.leave.history')}}">Leave History</a></li>
                 @if(Auth::user()->role=="manager")
-                <li class="nav-item"> <a class="nav-link" href="#">Leave Approval</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('admin.request.list')}}">Leave Approval</a></li>
                 @endif
               </ul>
             </div>

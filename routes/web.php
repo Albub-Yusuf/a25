@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,14 @@ Route::middleware('auth')->group(function () {
 
 // Category routes
 Route::resource('category',CategoryController::class)->middleware(['auth','verified']);
+
+// Leave Request routes
+Route::get('request-list-admin',[LeaveRequestController::class,'indexManager'])->middleware(['auth','verified'])->name('admin.request.list');
+Route::get('approved-leave-request',[LeaveRequestController::class,'approvedRequestForm'])->middleware(['auth','verified'])->name('update.leave.request');
+Route::put('update-request',[LeaveRequestController::class,'updateRequest'])->middleware(['auth','verified'])->name('update.request');
+Route::get('leave-history',[LeaveRequestController::class,'indexEmployee'])->middleware(['auth','verified'])->name('employee.leave.history');
+Route::get('make-leave-request',[LeaveRequestController::class,'getRequestForm'])->middleware(['auth','verified'])->name('make.leave.request');
+Route::post('store-request',[LeaveRequestController::class,'makeRequest'])->middleware(['auth','verified'])->name('request.store');
 
 
 require __DIR__.'/auth.php';

@@ -22,9 +22,9 @@
 <div class="col-md-6 ">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Edit Category</h4>
+                  <h4 class="card-title">Edit Leave Category</h4>
                   <p class="card-description">
-                    Edit Event Category
+                    Edit Leave Category
                   </p>
                   <form class="forms-sample" action="{{route('category.update',$categoryDetails->id)}}" method="POST">
                     @csrf
