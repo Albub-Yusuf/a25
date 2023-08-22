@@ -105,12 +105,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
+            <a class="nav-link" data-toggle="collapse" href="#leave" aria-expanded="false" aria-controls="leave">
               <i class="icon-layout menu-icon"></i>
               <span class="menu-title">Leave</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="categories">
+            <div class="collapse" id="leave">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="#">Leave Request</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">Leave History</a></li>
@@ -120,6 +120,24 @@
               </ul>
             </div>
           </li>  
+
+          @if(Auth::user()->role=="manager")
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Categories</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="categories">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('category.index')}}">Category List</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('category.create')}}">Add Category</a></li>
+              </ul>
+            </div>
+          </li>  
+
+          @endif
        
         </ul>
       </nav>
