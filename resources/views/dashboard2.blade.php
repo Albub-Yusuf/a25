@@ -29,14 +29,15 @@
               </div>
             </div>
             <!-- statistics shown here -->
+            @if(Auth::user()->role=="employee")
             <div class="col-md-6 grid-margin transparent">
               <div class="row">
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-tale">
                     <a style="text-decoration: none; color:#fff;" href="#">
                     <div class="card-body">
-                      <p class="mb-4">New Leave Request: </p>
-                      <p class="fs-30 mb-2">0</p>
+                      <p class="mb-4">Pending Leave Request: </p>
+                      <p class="fs-30 mb-2">{{$pendingLeave}}</p>
                       <p></p>
                     </div>
                     </a>
@@ -46,8 +47,8 @@
                   <div class="card card-dark-blue">
                    <a style="text-decoration: none; color:#fff;" href="#">
                    <div class="card-body">
-                      <p class="mb-4">Total Approved</p>
-                      <p class="fs-30 mb-2">0</p>
+                      <p class="mb-4">Total Reject</p>
+                      <p class="fs-30 mb-2">{{$rejectedLeave}}</p>
                       <p></p>
                     </div>
                    </a>
@@ -59,8 +60,8 @@
                   <div class="card card-light-blue">
                   <a style="text-decoration: none; color:#fff;" href="#">
                   <div class="card-body">
-                      <p class="mb-4">Total Reject</p>
-                      <p class="fs-30 mb-2">0</p>
+                      <p class="mb-4">Total leave spent</p>
+                      <p class="fs-30 mb-2">{{$grantedLeave}}</p>
                       <p></p>
                     </div>
                   </a>
@@ -69,38 +70,56 @@
                 <div class="col-md-6 stretch-card transparent">
                   <div class="card card-light-danger">
                     <div class="card-body">
-                      <p class="mb-4">Total Leave Request</p>
-                      <p class="fs-30 mb-2">0</p>
+                      <p class="mb-4">Available Leave</p>
+                      <p class="fs-30 mb-2">{{$balanceLeave}}</p>
                       <p></p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            @endif
             <!-- statistics ends here -->
-          </div>
-     
-          <div class="row">
-            <div class="col-md-4 stretch-card grid-margin">
+
+            <!-- Employee Summarize pending Request -->
+
+            @if(Auth::user()->role=="employee")
+         <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-10 stretch-card grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title mb-0">Events</p>
+                  <p class="card-title mb-0 py-3 d-flex justify-content-between"><span>My Recent Leave Requests</span>  <span><a style="font-size: 14px !important; color:#000; font-weight:500;" href="{{route('employee.leave.history')}}">Show All Request</a></span></p>
                   <div class="table-responsive">
                     <table class="table table-borderless">
                       <thead>
-                        <tr>
-                          <th class="pl-0  pb-2 border-bottom">Events</th>
-                          <th class="pl-0  pb-2 border-bottom">Place</th>
-                          <th class="border-bottom pb-2">Responses</th>
+                       
+                        <!--  -->
+                        <tr class="text-center">
+                          <th class="pl-0  pb-2 border-bottom">Leave Type</th>
+                          <th class="pl-0  pb-2 border-bottom">Start Date</th>
+                          <th class="pl-0  pb-2 border-bottom">End Date</th>
+                          <th class="pl-0  pb-2 border-bottom">Total</th>
+                          <th class="pl-0  pb-2 border-bottom">Status</th>                 
                         </tr>
                       </thead>
-                      <tbody>
-                      
+                      <tbody class="text-center">
+                        @foreach($employeeLeaves as $leave)
                         <tr>
-                          <td class="pl-0">title</td>
-                          <td>place</td>
-                          <td><p class="mb-0"><span class="font-weight-bold mr-2">Response</span></p></td>
+                          <td>{{$leave->category->category}}</td>
+                          <td>{{$leave->start_date}}</td>
+                          <td>{{$leave->end_date}}</td>
+                          <td>{{$leave->expected_leave_days}} days</td>
+                          <td 
+                                @if($leave->status=="pending") class="text-secondary" @endif 
+                                @if($leave->status=="approved") class="text-success" @endif
+                                @if($leave->status=="rejected") class="text-danger" @endif><b>{{$leave->status}}</b></td>
+                          <!-- <td><label class="badge badge-danger">Pending</label></td> -->
                         </tr>
+                        @endforeach
+                        
+
+                        <!--  -->
                                    
                       </tbody>
                     </table>
@@ -108,128 +127,117 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4 stretch-card grid-margin">
+          
+          </div>
+         </div>
+         @endif
+
+            <!--  -->
+
+
+
+            <!-- for manager -->
+            @if(Auth::user()->role=="manager")
+            <div class="col-md-6 grid-margin transparent">
               <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                  <div class="card">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <a style="text-decoration: none; color:#fff;" href="#">
                     <div class="card-body">
-                      <p class="card-title">Charts</p>
-                      <div class="charts-data">
-                        <div class="mt-3">
-                          <p class="mb-0">Data 1</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="progress progress-md flex-grow-1 mr-4">
-                              <div class="progress-bar bg-inf0" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="mb-0">5k</p>
-                          </div>
-                        </div>
-                        <div class="mt-3">
-                          <p class="mb-0">Data 2</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="progress progress-md flex-grow-1 mr-4">
-                              <div class="progress-bar bg-info" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="mb-0">1k</p>
-                          </div>
-                        </div>
-                        <div class="mt-3">
-                          <p class="mb-0">Data 3</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="progress progress-md flex-grow-1 mr-4">
-                              <div class="progress-bar bg-info" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="mb-0">992</p>
-                          </div>
-                        </div>
-                        <div class="mt-3">
-                          <p class="mb-0">Data 4</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="progress progress-md flex-grow-1 mr-4">
-                              <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="mb-0">687</p>
-                          </div>
-                        </div>
-                      </div>  
+                      <p class="mb-4">New Leave Request Notification: </p>
+                      <p class="fs-30 mb-2">{{$notification}}</p>
+                      <p></p>
                     </div>
+                    </a>
                   </div>
                 </div>
-                <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
-                  <div class="card data-icon-card-primary">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                   <a style="text-decoration: none; color:#fff;" href="#">
+                   <div class="card-body">
+                      <p class="mb-4">Total Employees Leave Approved</p>
+                      <p class="fs-30 mb-2">{{$totalApprovedLeave}}</p>          
+                      <p></p>
+                    </div>
+                   </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                  <a style="text-decoration: none; color:#fff;" href="#">
+                  <div class="card-body">
+                      <p class="mb-4">Total Leave Spent</p>
+                      <p class="fs-30 mb-2">{{$grantedLeave}}</p>
+                      <p></p>
+                    </div>
+                  </a>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
                     <div class="card-body">
-                      <p class="card-title text-white">Number of Events</p>                      
-                      <div class="row">
-                        <div class="col-8 text-white">
-                          <h3>0</h3>
-                          <p class="text-white font-weight-500 mb-0">The total number of sessions within the date range.It is calculated as the sum . </p>
-                        </div>
-                        <div class="col-4 background-icon">
-                        </div>
-                      </div>
+                      <p class="mb-4">My Available Leave</p>
+                      <p class="fs-30 mb-2">{{$balanceLeave}}</p>
+                      <p></p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-4 stretch-card grid-margin">
+            @endif
+            <!--  -->
+          </div>
+     
+         @if(Auth::user()->role=="manager")
+         <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-10 stretch-card grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title">Notifications</p>
-                  <ul class="icon-data-list">
-                    <li>
-                      <div class="d-flex">
-                        <img src="{{asset('assets/images/faces/face1.jpg')}}" alt="user">
-                        <div>
-                          <p class="text-info mb-1">Isabella Becker</p>
-                          <p class="mb-0">Sales dashboard have been created</p>
-                          <small>9:30 am</small>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex">
-                        <img src="{{asset('assets/images/faces/face2.jpg')}}" alt="user">
-                        <div>
-                          <p class="text-info mb-1">Adam Warren</p>
-                          <p class="mb-0">You have done a great job #TW111</p>
-                          <small>10:30 am</small>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex">
-                      <img src="{{asset('assets/images/faces/face3.jpg')}}" alt="user">
-                     <div>
-                      <p class="text-info mb-1">Leonard Thornton</p>
-                      <p class="mb-0">Sales dashboard have been created</p>
-                      <small>11:30 am</small>
-                     </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex">
-                        <img src="{{asset('assets/images/faces/face4.jpg')}}" alt="user">
-                        <div>
-                          <p class="text-info mb-1">George Morrison</p>
-                          <p class="mb-0">Sales dashboard have been created</p>
-                          <small>8:50 am</small>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex">
-                        <img src="{{asset('assets/images/faces/face5.jpg')}}" alt="user">
-                        <div>
-                        <p class="text-info mb-1">Ryan Cortez</p>
-                        <p class="mb-0">Herbs are fun and easy to grow.</p>
-                        <small>9:00 am</small>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                  <p class="card-title mb-0 py-3 d-flex justify-content-between"><span>Recent Leave Requests</span>  <span><a style="font-size: 14px !important; color:#000; font-weight:500;" href="{{route('admin.waiting.list')}}">Show All Request</a></span></p>
+                  <div class="table-responsive">
+                    <table class="table table-borderless">
+                      <thead>
+                       
+                        <!--  -->
+                        <tr class="text-center">
+                          <th class="pl-0  pb-2 border-bottom">Employee</th>
+                          <th class="pl-0  pb-2 border-bottom">Leave Type</th>
+                          <th class="pl-0  pb-2 border-bottom">Start Date</th>
+                          <th class="pl-0  pb-2 border-bottom">End Date</th>
+                          <th class="pl-0  pb-2 border-bottom">Total</th>
+                          <th class="pl-0  pb-2 border-bottom">Status</th>                 
+                        </tr>
+                      </thead>
+                      <tbody class="text-center">
+                        @foreach($leaves as $leave)
+                        <tr>
+                          <td>{{$leave->user->name}}</td>
+                          <td>{{$leave->category->category}}</td>
+                          <td>{{$leave->start_date}}</td>
+                          <td>{{$leave->end_date}}</td>
+                          <td>{{$leave->expected_leave_days}} days</td>
+                          <td 
+                                @if($leave->status=="pending") class="text-secondary" @endif 
+                                @if($leave->status=="approved") class="text-success" @endif
+                                @if($leave->status=="rejected") class="text-danger" @endif><b>{{$leave->status}}</b></td>
+                          <!-- <td><label class="badge badge-danger">Pending</label></td> -->
+                        </tr>
+                        @endforeach
+                       
+
+                        <!--  -->
+                                   
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
+          
           </div>
+         </div>
+         @endif
 @endsection

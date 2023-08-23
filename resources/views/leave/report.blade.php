@@ -34,9 +34,9 @@
                    <tr>
                     <td>{{$serial++}}</td>
                     <td>{{$record->user->name}}</td>
-                    <td>30</td>
+                    <td>20</td>
                     <td>{{$record->total_off_days}}</td>
-                    <td>{{30-$record->total_off_days}}</td>
+                    <td>{{20-$record->total_off_days}}</td>
                    </tr>
                    @endforeach
                       </tbody>

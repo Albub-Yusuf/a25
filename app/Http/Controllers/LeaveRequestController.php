@@ -19,7 +19,7 @@ class LeaveRequestController extends Controller
        $currentYear = date('Y');
        $data['leaveRecords'] = LeaveRequest::with('user')->whereYear('updated_at',$currentYear)->where('status','approved')->select(
         'user_id',
-        DB::raw('count(*) as total_off_days'),
+        DB::raw('sum(expected_leave_days) as total_off_days'),
         
     )
     ->groupBy('user_id')->orderBy('id','DESC')
@@ -30,7 +30,7 @@ class LeaveRequestController extends Controller
 
     public function waitingList(){
         $data['serial'] = 1;
-        $data['leaves'] = LeaveRequest::with(['category','user'])->where('status','pending')->where('is_notified',1)->get();
+        $data['leaves'] = LeaveRequest::with(['category','user'])->where('status','pending')->where('is_notified',1)->orderBy('id','DESC')->get();
         $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
         return view('leave.waitingList',$data);
     }
