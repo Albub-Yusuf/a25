@@ -6,13 +6,21 @@
                 @csrf
                 @method('POST')
                 <div class="form-group">
+                @error('name')
+                        <label class="text-danger"><h4>{{ $message }}</h4></label>
+                        <br>
+                @enderror
                 <label for="name" style="font-size:18px; font-weight:700;">Name: </label>
 
-                  <input style="font-size:18px; font-weight:700;" type="name" name="name" class="form-control form-control-lg" id="name" placeholder="Enter Your Name">
+                  <input style="font-size:18px; font-weight:700;" value="{{old('name')}}" type="text" name="name" class="form-control form-control-lg" id="name" placeholder="Enter Your Name">
                 </div>
                 <div class="form-group">
+                @error('email')
+                        <label class="text-danger"><h4>{{ $message }}</h4></label>
+                        <br>
+                @enderror
                 <label for="email" style="font-size:18px; font-weight:700;">Email: </label>
-                  <input style="font-size:18px; font-weight:700;" type="email" name="email" class="form-control form-control-lg" id="email" placeholder="Enter Email Address">
+                  <input style="font-size:18px; font-weight:700;" type="email" value="{{old('email')}}" name="email" class="form-control form-control-lg" id="email" placeholder="Enter Email Address">
                 </div>
                 <div class="form-group">
                     <label for="role" style="font-size:18px; font-weight:700;">User Role: </label>
@@ -22,12 +30,20 @@
                     </select>
                 </div>
                 <div class="form-group">
+                @error('password')
+                        <label class="text-danger"><h4>{{ $message }}</h4></label>
+                        <br>
+                @enderror
                 <label for="password" style="font-size:18px; font-weight:700;">Password</label>
 
                   <input  style="font-size:18px; font-weight:700;" type="password" name="password" class="form-control form-control-lg" id="password" placeholder="Enter Password">
                 </div>
 
                 <div class="form-group">
+                @error('password_confirmation')
+                        <label class="text-danger"><h4>{{ $message }}</h4></label>
+                        <br>
+                @enderror
                 <label for="password_confirmation" style="font-size:18px; font-weight:700;">Confirm Password: </label>
 
                   <input  style="font-size:18px; font-weight:700;" type="password" name="password_confirmation" class="form-control form-control-lg" id="password_confirmation" placeholder="Enter Password Again">
