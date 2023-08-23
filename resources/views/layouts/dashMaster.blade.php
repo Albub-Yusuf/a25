@@ -115,13 +115,20 @@
                 <li class="nav-item"> <a class="nav-link" href="{{route('make.leave.request')}}">Leave Request</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{route('employee.leave.history')}}">Leave History</a></li>
                 @if(Auth::user()->role=="manager")
-                <li class="nav-item"> <a class="nav-link" href="{{route('admin.waiting.list')}}">Waiting List</a></li>
+                <!-- <li class="nav-item"> <a class="nav-link" href="{{route('admin.waiting.list')}}">Waiting List</a></li> -->
                 @endif
               </ul>
             </div>
           </li>  
 
           @if(Auth::user()->role=="manager")
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.waiting.list')}}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Notification @if($notification!=0)<sup><b style="color:red; font-size:16px; ">{{$notification}}</b></sup>@endif</span>
+            </a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">

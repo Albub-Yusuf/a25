@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,11 +13,15 @@ class CategoryController extends Controller
 
         $data['categories'] = Category::orderBy('id','DESC')->get();
         $data['serial'] = 1;
+        $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
+
         return view('category.index',$data);
      }
  
      public function create(){
-         return view('category.create');
+        $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
+
+         return view('category.create',$data);
      }
  
      public function store(Request $request){
@@ -33,8 +38,10 @@ class CategoryController extends Controller
  
      public function edit(Category $category){
          
-         $categoryDetails = Category::where('id',$category->id)->first();
-         return view('category.edit',['categoryDetails'=>$categoryDetails]);
+         $data['categoryDetails'] = Category::where('id',$category->id)->first();
+         $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
+
+         return view('category.edit',$data);
      }
  
      public function update(Category $category,Request $request){

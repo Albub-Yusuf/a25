@@ -19,11 +19,13 @@ class LeaveRequestController extends Controller
     public function waitingList(){
         $data['serial'] = 1;
         $data['leaves'] = LeaveRequest::with(['category','user'])->where('status','pending')->where('is_notified',1)->get();
+        $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
         return view('leave.waitingList',$data);
     }
 
     public function indexEmployee(){
         $data['serial'] = 1;
+        $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
         $data['leaves'] = LeaveRequest::with('category')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->get();
         return view('leave.index',$data);
     }
@@ -31,6 +33,8 @@ class LeaveRequestController extends Controller
 
     public function getRequestForm(){
         $data['categories'] = Category::all();
+        $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
+
         return view('leave.requestForm',$data);
     }
 
@@ -67,6 +71,8 @@ class LeaveRequestController extends Controller
 
     public function approvedRequestForm($id){
         $data['leaveDetails'] = LeaveRequest::with(['category','user'])->where('id',$id)->first();
+        $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
+
 
        return view('leave.approvedForm',$data);
     }
@@ -77,7 +83,7 @@ class LeaveRequestController extends Controller
 
        
 
-        LeaveRequest::where('id',$request->id)->update(['status'=>$request->status]);
+        LeaveRequest::where('id',$request->id)->update(['status'=>$request->status,'is_notified'=>0]);
 
         $leaveRequest = [
 
