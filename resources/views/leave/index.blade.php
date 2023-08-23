@@ -36,7 +36,7 @@
                         <tr>
                           <td>{{$serial++}}</td>
                           <td>{{$leave->category->category}}</td>
-                          <td>{{$leave->reason}}</td>
+                          <td><p>{{ Illuminate\Support\Str::limit($leave->reason, 30) }}</p></td>
                           <td>{{$leave->start_date}}</td>
                           <td>{{$leave->end_date}}</td>
                           <td>{{$leave->expected_leave_days}}</td>

@@ -131,6 +131,13 @@
           </li>
 
           <li class="nav-item">
+            <a class="nav-link" href="{{route('leave.report')}}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Annual Reports</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
               <i class="icon-layout menu-icon"></i>
               <span class="menu-title">Categories</span>

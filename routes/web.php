@@ -39,6 +39,7 @@ Route::put('update-request',[LeaveRequestController::class,'updateRequest'])->mi
 Route::get('leave-history',[LeaveRequestController::class,'indexEmployee'])->middleware(['auth','verified'])->name('employee.leave.history');
 Route::get('make-leave-request',[LeaveRequestController::class,'getRequestForm'])->middleware(['auth','verified'])->name('make.leave.request');
 Route::post('store-request',[LeaveRequestController::class,'makeRequest'])->middleware(['auth','verified'])->name('request.store');
+Route::get('leave-report',[LeaveRequestController::class,'report'])->middleware(['auth','verified'])->name('leave.report');
 
 
 require __DIR__.'/auth.php';

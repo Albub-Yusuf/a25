@@ -8,12 +8,24 @@ use App\Models\LeaveRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class LeaveRequestController extends Controller
 {
-    public function indexManager(){
-       
+    public function report(){
+       $data['serial'] = 1;
+       $data['notification'] = LeaveRequest::where('is_notified',1)->where('status','pending')->count();
+       $currentYear = date('Y');
+       $data['leaveRecords'] = LeaveRequest::with('user')->whereYear('updated_at',$currentYear)->where('status','approved')->select(
+        'user_id',
+        DB::raw('count(*) as total_off_days'),
+        
+    )
+    ->groupBy('user_id')->orderBy('id','DESC')
+    ->get();
+      
+       return view('leave.report',$data);
     }
 
     public function waitingList(){
