@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotificationMail;
 use App\Models\Category;
 use App\Models\LeaveRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveRequestController extends Controller
 {
@@ -73,7 +75,26 @@ class LeaveRequestController extends Controller
         
         $request->validate(['status'=>'required']);
 
+       
+
         LeaveRequest::where('id',$request->id)->update(['status'=>$request->status]);
+
+        $leaveRequest = [
+
+            'status' => $request->status,
+            'email' => $request->employeeEmail,
+            'name' => $request->name,
+            'startDate' => $request->startDate,
+            'endDate' => $request->endDate,
+            'totalDays' => $request->expectedLeaveDays,
+            'leaveType' => $request->leaveType,
+            'approvedBy' => $request->approvedBy
+
+        ];
+
+        Mail::to($request->employeeEmail)->send(new NotificationMail($leaveRequest));
+
+
 
         return redirect()->route('admin.waiting.list')->with('message','Decision Given.');
 

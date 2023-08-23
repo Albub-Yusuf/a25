@@ -54,13 +54,15 @@
                 <div class="row my-3">
                     <div class="col-md-4">
                         <label for="name" style="font-size:18px; font-weight:700;">Employee's Name: </label>
-                        <input style="font-size:18px;" class="form-control" type="text" readonly value="{{$leaveDetails->user->name}}">
+                        <input style="font-size:18px;" name="name" class="form-control" type="text" readonly value="{{$leaveDetails->user->name}}">
                     </div>
                     <div class="col-md-4">
                         <label style="font-size:18px; font-weight:700; " for="email">Employee's Email: </label>
                         <input style="font-size:18px;" class="form-control" type="text" readonly value="{{$leaveDetails->user->email}}">
                         <input  type="hidden" name="employeeEmail" value="{{$leaveDetails->user->email}}">
                         <input type="hidden" name="id" value="{{$leaveDetails->id}}">
+                        <input type="hidden" name="expectedLeaveDays" value="{{$leaveDetails->expected_leave_days}}">
+                        <input type="hidden" name="approvedBy" value="{{Auth::user()->name}}">
                     </div>
                 </div>
                  <div class="row">
@@ -70,7 +72,7 @@
                             <div class="form-group" style="font-size: 18px; font-weight:700;">
                             
                                    
-                                        <input type="text" readonly selected style="font-size: 18px; font-weight:700;" class="form-control" value="{{$leaveDetails->category->category}}"></input>
+                                        <input type="text" name="leaveType" readonly selected style="font-size: 18px; font-weight:700;" class="form-control" value="{{$leaveDetails->category->category}}"></input>
                                   
                             </div>  
                         @error('category')

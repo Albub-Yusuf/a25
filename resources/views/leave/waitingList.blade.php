@@ -25,7 +25,6 @@
                           <th>Serial</th>
                           <th>Employee</th>
                           <th>Leave Type</th>
-                          <th>Reason</th>
                           <th>Start Date</th>
                           <th>End Date</th>
                           <th>Total</th>
@@ -39,10 +38,9 @@
                           <td>{{$serial++}}</td>
                           <td>{{$leave->user->name}}</td>
                           <td>{{$leave->category->category}}</td>
-                          <td>{{$leave->reason}}</td>
                           <td>{{$leave->start_date}}</td>
                           <td>{{$leave->end_date}}</td>
-                          <td>{{$leave->expected_leave_days}}</td>
+                          <td>{{$leave->expected_leave_days}} days</td>
                           <td 
                                 @if($leave->status=="pending") class="text-secondary" @endif 
                                 @if($leave->status=="approved") class="text-success" @endif
